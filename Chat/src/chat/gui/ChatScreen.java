@@ -132,10 +132,10 @@ public class ChatScreen extends javax.swing.JFrame {
         InetAddress to_ip = null;
         try{
          to_ip = InetAddress.getByName(getIpAddressInput().getText().toString());
-        }catch(Exception bullshit)
+        }catch(Exception e)
         {
         
-            System.out.println(bullshit.getMessage());
+            System.out.println(e.getMessage());
         }
        
          if(to_ip != null){  
