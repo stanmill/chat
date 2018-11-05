@@ -6,6 +6,8 @@
 package chat;
 
 import chat.gui.ChatScreen;
+import chat.gui.ConnectScreen;
+import chat.gui.SocketClass;
 
 /**
  *
@@ -17,9 +19,9 @@ public class Chat {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ChatScreen screen = new ChatScreen();
-        screen.initSocket();
-        screen.show();
+        ConnectScreen connectscreen = new ConnectScreen();
+        connectscreen.show();
+       
         
     }
     

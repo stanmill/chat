@@ -16,17 +16,20 @@ public class ChatScreen extends javax.swing.JFrame {
     /**
      * Creates new form ChatScreen
      */
-    Socket socket;
+    public SocketClass socket;
+    public InetAddress to_ip;
+    public int port;
     public ChatScreen() {
         initComponents();
         chatTextfield.setEditable(false);
     }
-
     
-    public void initSocket()
+    public void init(SocketClass socket,int port, InetAddress to_ip )
     {
-        //esto es para que el sucket no este null
-        this.socket = new Socket(64000,this);
+        this.socket = socket;
+        this.to_ip = to_ip;
+        this.port = port;
+             
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -119,34 +122,25 @@ public class ChatScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void connectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectButtonActionPerformed
-       
-        System.out.println("connect button works");
-
     }//GEN-LAST:event_connectButtonActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         
         //here you just sending a message base on this 
         String msg =  getMessageInput().getText().toString();
-        String port = getPortInput().getText().toString();
-        InetAddress to_ip = null;
-        try{
-         to_ip = InetAddress.getByName(getIpAddressInput().getText().toString());
-        }catch(Exception e)
-        {
-        
-            System.out.println(e.getMessage());
-        }
        
          if(to_ip != null){  
+             System.out.println("im sending this message to ip:" + to_ip + "and to port:" +port);
              getChatTextField().append("me:" + msg+ "\n");
-            socket.send(msg, to_ip, Integer.parseInt(port));
+              socket.send(msg, to_ip, port);
          }
          
         messageInput.setText("");
     }//GEN-LAST:event_sendButtonActionPerformed
          
     private void disconnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectButtonActionPerformed
+        
+        this.dispose();
         
     }//GEN-LAST:event_disconnectButtonActionPerformed
 
@@ -176,13 +170,6 @@ public class ChatScreen extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ChatScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChatScreen().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
