@@ -94,20 +94,19 @@ public class ConnectScreen extends javax.swing.JFrame {
 
     private void jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActionPerformed
         // TODO add your handling code here:
-        String port = getPort().getText().toString();
+        //String port = getPort().getText().toString();
         InetAddress get_ip = null;
         try{
-         get_ip = InetAddress.getByName(getIP().getText().toString());
+         get_ip = InetAddress.getByName("255.255.255.255");
         }catch(Exception e)
         {
         
             System.out.println(e.getMessage());
         }
-        ChatScreen screen = new ChatScreen();
-        screen.init(socket, Integer.parseInt(port), get_ip);
-        screens.add(screen);
-        screen.setVisible(true);
-        screen.show();
+        String name = getIP().getText().toString();
+        System.out.println("name = "+name);
+        socket.send("????? "+name+" ##### "+"stanley", get_ip, 64000);
+        
     }//GEN-LAST:event_jButtonActionPerformed
 
     /**

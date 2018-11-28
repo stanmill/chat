@@ -35,7 +35,7 @@ public class SocketClass {
 		try {
 			this.myAddress = InetAddress.getLocalHost();
                         System.out.println(this.myAddress.getHostAddress());
-			this.socket = new DatagramSocket(port, this.myAddress);
+			this.socket = new DatagramSocket(64000, this.myAddress);
 		} catch (SocketException | UnknownHostException e) {
                  e.printStackTrace();
 			System.exit(-1);
@@ -57,6 +57,7 @@ public class SocketClass {
 	public void receiveThread() {
 		
 		do {
+                    System.out.println("thread");
 			byte[] inBuffer = new byte[1024];
 			for ( int i = 0 ; i < inBuffer.length ; i++ ) {
 				inBuffer[i] = ' ';
