@@ -161,11 +161,11 @@ public class ConnectScreen extends javax.swing.JFrame {
     public javax.swing.JButton getJButton()
     {return this.jButton;}
     
-    public void createNewConnection(DatagramPacket packet){
+    public void createNewConnection(String name, DatagramPacket packet){
         ChatScreen screen = new ChatScreen();
       
 
-        screen.init(socket, packet.getPort(), packet.getAddress());
+        screen.init(name, socket, packet.getPort(), packet.getAddress());
         screen.getChatTextField().append(socket.msg);
         screens.add(screen);
         screen.setVisible(true);

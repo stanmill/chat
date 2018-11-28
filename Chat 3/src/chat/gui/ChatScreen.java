@@ -18,17 +18,19 @@ public class ChatScreen extends javax.swing.JFrame {
      */
     public SocketClass socket;
     public InetAddress to_ip;
+    public String name;
     public int port;
     public ChatScreen() {
         initComponents();
         chatTextfield.setEditable(false);
     }
     
-    public void init(SocketClass socket,int port, InetAddress to_ip )
+    public void init(String name,SocketClass socket,int port, InetAddress to_ip )
     {
         this.socket = socket;
         this.to_ip = to_ip;
         this.port = port;
+        this.name = name;
              
     }
     /**

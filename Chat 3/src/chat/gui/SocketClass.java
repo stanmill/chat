@@ -77,23 +77,71 @@ public class SocketClass {
 					" message = " + message + "\n" +
 					" From IP = " + inPacket.getAddress() + 
 					" From Port = " + inPacket.getPort());
-                        msg = message;
-			messageQueue.add(inPacket);
+                        if(message.contains("?")){
+                            message =  message.replace(" ","");
+                            String []  data =  message.split("\\?\\?\\?\\?\\?");
+                            for(int i=0; i<data.length; i++){
+                                System.out.println("index = "+i+" = "+data[i]);
+                            }
+                            String [] dataNeed =  data[1].split("#####");
+                            String looking_for =  dataNeed[0];
+                            String from =  dataNeed[1];
+                            String name="stanley";
                             
-                        boolean isFound = false;
-                        for(int i=0; i<obj.screens.size(); i++){
-                            if(inPacket.getAddress().getHostAddress().equals(obj.screens.get(i).to_ip.getHostAddress()) &&
+                             if(looking_for.toLowerCase().equals(name)){
+                                 System.out.println("incoming looking for me ");
+                                 boolean isFound = false;
+                                 for(int i=0; i<obj.screens.size(); i++){
+                                  if(inPacket.getAddress().getHostAddress().equals(obj.screens.get(i).to_ip.getHostAddress()) &&
+                                  inPacket.getPort() == obj.screens.get(i).port ){
+                                  isFound = true;
+                                  obj.screens.get(i).getChatTextField().append("them: "+message.trim()+"\n");      }
+                                  
+                                 }
+                               if(isFound == false){
+                            
+                                 obj.createNewConnection(from,inPacket);
+                                 
+                                 send("##### "+name+" ##### "+myAddress.getHostAddress(),inPacket.getAddress(),inPacket.getPort());
+                                }
+                             }//close looking for 
+                      }else{
+                            if(message.contains("#")){
+                                message = message.replace(" ", "");
+                                String [] incomingResp = message.split("#####");
+                                String from =  incomingResp[0];
+                                String ip =  incomingResp[1];
+                                boolean isFound = false;
+                                 for(int i=0; i<obj.screens.size(); i++){
+                                 if(inPacket.getAddress().getHostAddress().equals(obj.screens.get(i).to_ip.getHostAddress()) &&
+                                  inPacket.getPort() == obj.screens.get(i).port ){
+                                  isFound = true;
+                                  obj.screens.get(i).getChatTextField().append("them: "+message.trim()+"\n");
+                                 }
+                                }
+                                 if(isFound == false){
+                            
+                                 obj.createNewConnection(from,inPacket);
+                                     //obj.getChatTextField().append("them: "+message.trim()+"\n");
+                                }
+                                
+                            }else{
+                                 msg = message;
+			         messageQueue.add(inPacket);
+                            
+                                 boolean isFound = false;
+                                 for(int i=0; i<obj.screens.size(); i++){
+                                 if(inPacket.getAddress().getHostAddress().equals(obj.screens.get(i).to_ip.getHostAddress()) &&
                                   inPacket.getPort() == obj.screens.get(i).port ){
                                 isFound = true;
                                 obj.screens.get(i).getChatTextField().append("them: "+message.trim()+"\n");
                               
+                                 }
+                                }
                             }
-                        }
-                        if(isFound == false){
                             
-                            obj.createNewConnection(inPacket);
-                            //obj.getChatTextField().append("them: "+message.trim()+"\n");
-                        }
+                        }//close else
+                       
                         
 		} while(true);
 	}
